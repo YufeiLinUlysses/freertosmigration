@@ -1,0 +1,1 @@
+Need to have a 2019-06-20-raspbian-buster-lite.iso in order to run raspbian on qemu in win10

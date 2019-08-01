@@ -1,0 +1,465 @@
+ \documentclass[a4paper,12pt]{report}
+
+%Packages Used
+\usepackage{amssymb,latexsym,amsmath}     % Standard packages
+\usepackage{setspace}
+\usepackage{sectsty}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{graphics,graphicx}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{esvect}
+\usepackage{hyperref}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+
+\bookmarksetup{
+  numbered,
+  open
+}
+\renewcommand*{\thesection}{\arabic{section}}
+\onehalfspacing
+
+%Margins
+\addtolength{\textwidth}{1.0in}
+\addtolength{\textheight}{1.00in}
+\addtolength{\evensidemargin}{-0.75in}
+\addtolength{\oddsidemargin}{-0.75in}
+\addtolength{\topmargin}{-.50in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Theorem/Proof Environments %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{theorem}{Theorem}
+\newenvironment{proof}{\noindent{\bf Proof:}}{$\hfill \Box$ \vspace{10pt}}
+\sectionfont{\fontsize{12}{15}\selectfont}
+\titlespacing*{\section}{0.5pt}{0.25\baselineskip}{0.25\baselineskip}
+
+\begin{document}
+\noindent
+Yufei Lin\\
+
+\noindent
+Final Project\\
+
+\noindent
+Jun \(7^{th}\) 2019\\
+
+\noindent
+ASTRI Project
+
+\begin{center}
+\textbf{Plan of Project \& Summary from Books}
+\end{center}
+
+\begin{center}
+\textbf{Contents}
+\end{center}
+
+\noindent
+\textbf{I. Plan}\\
+
+\noindent
+\textbf{II. Summary from \textit{Linux From Scratch}}\\
+
+\noindent
+\textbf{III. Summary from \textit{Plan9-intro}}\\
+
+\noindent
+\textbf{IV. Summary from \textit{Plan9 Kernel Source-Notes}}\\
+
+\noindent
+\textbf{V. Additional Websites and Information}\\
+
+
+
+\pagebreak
+\noindent
+\textbf{I. Plan}\\
+
+\noindent
+\textbf{I.1. Goal}
+
+\noindent
+I am going to build a Blockchain Operating System(BOS) that can be migrated to ARM structure in a Arduino Uno machine in order to study applications of BOS in full-filling Internet of Things(IOT). \\
+
+\noindent
+\textbf{I.2. Resources}(Need Amendment)
+
+\noindent
+Listed below are the resource I may potentially need: \textcolor{red}{Will be specified once start on the project}
+
+\begin{enumerate}
+\item Help in IOT 
+\item Help in Arduino
+\end{enumerate}
+
+\noindent
+\textbf{I.3. Action Plan}
+
+\noindent
+The above schedule is a tentative schedule and my time leaving from Hong Kong is also not determined yet. 
+
+\noindent
+\begin{tabular}{l | l | l} 
+ \textbf{Tasks} & \textbf{Time Interval} & \textbf{Notes}  \\
+ \hline 
+ Read Books & Jun 6th - 11th & \textcolor{red}{May need more time}\\
+ Design \& Build BOS & Jun $12^{th}$ - $28^{th}$ & \\  
+ Test BOS & Jun $29^{th}$ - July $3^{rd}$& \\
+ Intro to Arduino Projects & July $4^{th}$ - $9^{th}$ &  \\
+ Migration of Operating System & July $10^{th} - 11^{th}$ & \\
+ Final test on a model of IOT & July $11^{th} - 21^{th}$ & \\
+ Final adjustment \& Write documentations and papers & July $22^{th}-31^{st}$ & 
+\end{tabular}
+
+\noindent
+\textbf{II. Summary from \textit{Linux From Scratch}}\\
+
+\noindent
+\textbf{II.1. How to Build a LFS}\\
+
+\noindent
+\textbf{II.1.1 What do we need for a LFS}
+
+\begin{enumerate}
+\item An already built Linux distribution, because we need the compiler, linker and shell in it
+\item A file system that can compile and install the new LFS system and necessary packages and patches
+\item An appropriate working environment
+\item Necessary packages needed to create a basic environment suite, also named as a toolchain
+\end{enumerate}
+
+\noindent
+\textbf{II.1.1. Prepare the Host System}\\
+
+\noindent 
+\textbf{II.1.1.1. Create a Partition}
+
+\noindent
+Minimal requirement of a partition is 6 GB. From there I see why we need a Plan9 because it could be built smaller. \\
+
+\noindent
+Quote from the book:"Because there is not always enough Random Access Memory (RAM) available for compilation processes, it is a good
+idea to use a small disk partition as swap space."
+
+\noindent
+I don't quite understand what does it mean by there may not always be enough RAM for processing. Also, how do we partition a RAM out from an existing space.\\
+
+\noindent
+\textbf{II.1.1.2. Create a File System on the Partition}
+
+\noindent
+We dominantly use type ext3 and ext4 file system from Linux in LFS. The command that creates a file system is: 
+
+\[mkfs -v -t ext4 /dev/<xxx>\]
+
+\noindent
+\textbf{II.1.1.2. Setting The \$LFS Variable}
+
+\noindent
+The variable name LFS should be defined throughout the LFS build process. It should be set to the name of the directory where you will be building your LFS system - we will use  \(/mnt/lfs\) as an example, but the directory choice is up to you. Choose a directory would involve the following command:
+\[\text{export } LFS=/mnt/lfs\]
+
+\noindent
+\textbf{II.1.1.3. Mounting the New Partition}
+
+\noindent
+The mount point of this book is under the directory specified by the LFS variable. The following is the example code:
+
+\noindent
+\(\text{mkdir -pv } \$LFS\)
+
+\noindent
+\(\text{mount -v -t ext4 } /dev/<xxx>\$LFS\)\\
+
+\noindent
+\textbf{II.1.2. Packages and Patches}
+
+\noindent
+The following is the things we need to do before actually download packages and patches:
+\begin{enumerate}
+\item Create a source directory with the following command: mkdir -v \$LFS/sources
+\item Make the directory sticky - means only owner can delete files in the directory, and writable with the following command: chmod -v a+wt \$LFS/sources
+\item Download patches: wget --input-file=wget-list --continue --directory-prefix=\$LFS/sources 
+\end{enumerate}
+
+\noindent
+\textbf{II.1.3. Final Preparations}\\
+
+\noindent
+\textbf{II.1.3.1. Creating the \$LFS/tools Directory}
+
+\noindent
+We need a separate folder to store all necessary tools that will be installed later for the system. Therefore, we create this tools directory. 
+
+\noindent
+\textbf{II.1.3.2. Adding the LFS User}
+
+\noindent
+In this section we are going to add a user account to the system so that we won't risk ourselves damage our system by using root account. Then we use the following code to create a full accessible account:\\
+
+\noindent
+groupadd lfs
+
+\noindent
+useradd -s /bin/bash -g lfs -m -k /dev/null lfs
+
+\noindent
+passwd lfs
+
+\noindent
+chown -v lfs \$LFS/tools
+
+\noindent
+chown -v lfs \$LFS/sources
+
+\noindent
+su - lfs\\
+
+\noindent
+\textbf{II.1.3.3. Setting Up the Environment}
+
+\noindent
+Set up a good working environment by creating two new start up files for the bash shell. The code will be the same from the book therefore, I am not going to show them here. \\
+
+\noindent
+\textbf{II.1.4. Constructing a Temporary System}
+
+\noindent
+\textbf{General Compilation Instructions}
+
+\noindent
+In terms of compilation: Use echo \$LFS is set properly. Also, double check the patches are installed on the packages before installation. Furthermore, if during installation, errors occur, most of them can be ignored. \\
+
+\noindent
+\textbf{II.2. Install and Boot a LFS system}
+
+\begin{enumerate}
+\item Set up a new shell
+\item Set up basic configurations
+\item Set up kernel and boot loader
+\item Reboot the computer
+\end{enumerate}
+
+\noindent
+\textbf{II.2.1. Installing Basic System Software}\\
+
+\noindent
+\textbf{II.2.1.1. Preparing Virtual Kernel File Systems}
+
+\begin{enumerate}
+\item Creating initial device nodes
+\item Mounting and populating /dev
+\item Mounting virtual kernel file systems
+\end{enumerate}
+
+\noindent
+\textbf{II.2.1.2. Package Management}
+
+\noindent
+Package  Management  is  an  often  requested  addition  to  the  LFS  Book.  A  Package  Manager  allows  tracking  the installation of files making it easy to remove and upgrade packages. As well as the binary and library files, a package manager will handle the installation of configuration files.
+
+\noindent
+The following are the necessary techniques needed in package management. 
+
+\begin{enumerate}
+\item Install in separate directories
+\item Symlink style package management
+\item Timestamp based package management 
+\item Tracing installation scripts
+\item Creating package archives
+\item User based management
+\end{enumerate}
+
+\noindent
+\textbf{II.2.1.3. Entering the Chroot Environment}
+
+\noindent
+\textbf{II.2.1.4. Creating Directories}
+
+\noindent
+\textbf{II.2.1.5. Creating Essential Files and Symlinks}\\
+
+\noindent
+\textbf{II.2.2. System Configuration}
+
+\noindent
+The process must mount both virtual and real file systems, initialize
+devices, activate swap, check file systems for integrity, mount any swap partitions or files, set the system clock, bring
+up networking, start any daemons required by the system, and accomplish any other custom tasks needed by the user.
+
+\noindent
+\textbf{II.2.3. Making the LFS System Bootable}
+
+\begin{enumerate}
+\item Create the /etc/fstab file
+\item Use Linux 4.20.12
+\item Use GRUB to set up the boot process
+\end{enumerate}
+
+\noindent
+\textbf{III. Summary from \textit{Plan9-intro}}\\
+
+\noindent
+\textbf{III.1. Operating System Concept}
+
+\noindent
+An operating system is also known as a kernel, a virtual machine, or a resource manager. It must be used as a way that can be installed on any possible machine and is able to be compatible for all versions of hardware. 
+
+\noindent
+In an operating system, we must be able to running and editing commands, using files, manipulating directories and controlling permissions.\\
+
+\noindent
+\textbf{III.2. Programs and Processes}\\
+
+\noindent
+\textbf{III.2.1. Processes}
+
+\noindent
+A running program is called a process. On the other hand, a program is just a bunch of data that is not alive, meaning no interaction between users and programs.  
+
+\noindent
+A process is not called, but executed. It also does not have a return state in Plan 9, but would terminate when it has to or misbehaved.
+
+\noindent
+The following picture shows the entire procedure for running a process:
+\begin{figure}[h]
+\centering	
+\includegraphics[width=14cm, height=5cm]{"pic1"}
+\caption{Process states and transitions between them}
+\end{figure}
+
+\noindent
+\textbf{III.2.1.1. Process names and states}
+
+\noindent
+\begin{enumerate}
+\item Each process is given a unique number by the system when it is created, which is named as process id or pid. 
+\item Process state indicates what the process is doing. 
+\item Each process is given a small amount of processor time, named quantum, and later, the system decides to jump to another one.
+\item The state for a process is called its context.
+\item A transfer of control from one process to another, by saving the state for the old process and reloading the state for the new one, is called a context switch.
+\item The part of the kernel deciding which process runs each time is called the scheduler.
+\item The decisions made by the scheduler to multiplex the processor among processes are collectively known as scheduling.
+\end{enumerate}
+
+\noindent
+\textbf{III.2.2. Loaded Prgrams}
+
+\noindent
+When a program in source form is compiled and linked, a binary file is generated. This file keeps all the information needed to execute the program. The system would load a program by reading the information kept in binary with a loader. A loader is specified as follows:
+\begin{itemize}
+\item The header in the binary file reports the memory size required for the program text, and the file keeps the memory image of that text. Therefore, the system can just copy all this into memory. For a given system and architecture, there is a convention regarding which addresses the program must use. Therefore, the system knows where to load the program.
+\item The header in the binary reports the memory size required for initialized variables (globals) and the file contains a memory image for them. Thus, the system can copy those bytes to memory. Note that the system has no idea regarding where does one variable start or how big it is. The system only knows how many bytes it has to copy to memory, and at which address should they be copied. 
+\item For uninitialized global variables, the binary header reports their total size. The system allocates that amount of memory for the program. That is all it has to do. As a courtesy, Plan 9 guarantees that such memory is initialized with all bytes being zero. This means that all your global variables are initialized to null values by default. That is a good thing, because most programs will misbehave if variables are not properly initialized, and null values for variables seem to be a nice initial value by default.
+\end{itemize}
+
+\noindent
+\textbf{III.2.3. Environment}
+
+\noindent
+Environment variable is a way to supply arguments to a process. All environment variables in a process are defined as a set of \textit{name = value} strings. Usually, all processes running in the same window share the environment variables.\\
+
+\noindent
+\textbf{III.2.4. Everything is a File}
+
+\noindent
+For most abstractions provided by Plan 9, to let you use your hardware, a file interface is provided. This means that the system lies to you, and makes you believe that many things, that of course are not, are files. The point is that they appear to be files, so that
+you can use them as if that was really the case.\\
+
+\noindent
+\textbf{III.3. Files}
+
+\noindent
+The abstractions provided by Plan 9 can be used through a file interface. If you know how to use the file interface, you also know how to use the interface for most of the abstractions that Plan 9 provides.
+
+\begin{figure}[h]
+\centering	
+\includegraphics[width=14cm, height=6cm]{"pic2"}
+\caption{File Descriptor Process Files}
+\end{figure}
+
+\noindent
+\textbf{III.4. Other Important Components of Plan} 
+
+\noindent
+All the followings are important components but not necessary ones in an operating system. When I build my BOS, I will consider which ones are important and which ones are not in order to make my OS more flexible and optimal. 
+
+\begin{itemize}
+\item Parent and Child of a program
+\item Communicating Processes
+\item Network Communications
+\item Resource, Files, and Names
+\item Using the Shell
+\item Concurrent Programming
+\item Threads and Channels
+\item User Input/Output
+\item Build a File Server
+\item Security
+\item Tools include: Regular expression, Sorting and searching, Searching for changes, AWK, Processing data, File systems
+\end{itemize}
+
+\noindent
+\textbf{IV. Summary from \textit{Plan9 Kernel Source-Notes}}
+
+Most chapters are introducing similar concepts from the previous book. Therefore, I am not going to put them down in this summary.
+
+\noindent
+\textbf{IV.I. Memory Management}
+
+\noindent
+Plan 9 uses paged virtual memory. Usually users would see a segmentation of memory like the following:
+
+\begin{figure}[h]
+\centering	
+\includegraphics[width=9cm, height=4.5cm]{"pic3"}
+\caption{User View of a Memory}
+\end{figure}
+
+\noindent 
+\textbf{IV.I.1. Processes and Segments}
+
+\noindent
+\textbf{IV.I.1.1. Create New Segments}
+
+\noindent
+In order for a program to run well, we need to create new segment for it to run on. The procedure creates a segment of a given type, base and length. It aborts if the size is beyond the maximum size allowed for a segment—size is in pages, as segments must contain an integral number of virtual memory pages because the paging hardware is used to implement them.
+
+\noindent
+Similarly, we need to create new text segments for texts such that it will be easier for users to access texts. \\
+
+\noindent
+\textbf{IV.I.2. Page allocation and paging}
+
+\noindent
+\textbf{IV.I.2.1. Allocation and caching}
+
+\noindent
+Segments are filled up with pages on demand. The following graph indicates how page frames allocated when segments reclaim more memory.
+
+\begin{figure}[h]
+\centering	
+\includegraphics[width=16cm, height=10cm]{"pic4"}
+\caption{User View of a Memory}
+\end{figure}
+
+\noindent
+\textbf{IV.I.2.2. Terminating Segments}
+
+\noindent
+Segments are usually released by putseg, however, there is another routine (the one called by killbig, which you already saw) that is called to release memory held by a segment. It is also used by a couple other routines besides killbig.
+
+\noindent
+\textbf{V. Additional Websites and Information}
+\begin{enumerate}
+\item An interesting website for learning Plan9 working with Golang:\textcolor{blue}{https://www.youtube.com/watch?}
+
+\textcolor{blue}{v=dPdXxex1v\_4}
+\end{enumerate}
+
+\end{document}

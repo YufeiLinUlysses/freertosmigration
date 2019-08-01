@@ -1,0 +1,15 @@
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/timers.c
+migration\timers.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+migration\timers.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+migration\timers.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+migration\timers.o: ../Inc/FreeRTOSConfig.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+migration\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
